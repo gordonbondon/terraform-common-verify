@@ -1,0 +1,13 @@
+---
+driver:
+  name: terraform
+  root_module_directory: "./test/fixtures/"
+
+provisioner:
+  name: terraform
+
+platforms:
+  - name: default
+
+suites:
+  - name: default

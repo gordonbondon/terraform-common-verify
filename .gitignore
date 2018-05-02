@@ -1,0 +1,8 @@
+.terraform
+*.tfstate
+*.tfstate.backup
+.kitchen
+.vscode
+.DS_Store
+
+Gemfile.lock
