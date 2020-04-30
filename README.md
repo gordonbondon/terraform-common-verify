@@ -1,29 +1,49 @@
 # VERIFY terraform module
 
-Use to verify variables. This module has no outputs and does not create any resources.
-It uses terraform interpolation to check variables and bash script to exit with error when
-variables do not pass the verification.
+Use this module to verify values from resources during plan. This module has no outputs
+and does not create any resources. It uses terraform interpolation to check values
+and bash script to exit with error when they do not pass the verification.
 
+If you need to verify just module variables - use terraform built-in [validation rules](https://www.terraform.io/docs/configuration/variables.html#custom-validation-rules)
 
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|:----:|:-----:|:-----:|
-| error | error message to display | string | - | yes |
-| match | pass in expression that will evaluate to `true` or `false` | string | - | yes |
-
-## Example
+## Usage example
 
 ```terraform
 module "check" {
   source  = "gordonbondon/verify/common"
+  version = "~> 2.0"
 
-  match = "${contains(list("a", "b", "c"), "a")}"
+  match = contains(list("a", "b", "c"), "a")
   error = "Value must be one of a,b,c"
 }
 ```
 
+## System Requirements
+
+* `bash` shell interpreter
+
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-* `bash` shell
-* [`jq`](https://github.com/stedolan/jq) package
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| external | n/a |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| error | error message to display | `string` | n/a | yes |
+| match | pass in expression that will evaluate to `true` or `false` | `any` | n/a | yes |
+
+## Outputs
+
+No output.
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
