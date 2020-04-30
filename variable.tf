@@ -3,6 +3,6 @@ variable "match" {
 }
 
 variable "error" {
-  type = "string"
+  type        = string
   description = "error message to display"
 }
