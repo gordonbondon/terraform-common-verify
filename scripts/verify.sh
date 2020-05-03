@@ -1,19 +1,27 @@
-#!/bin/bash
-set -e
-set -u
-set -o pipefail
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+function get_value {
+  value=$(echo "${2}" | grep -o "\"${1}\":\"[^\"]*" | grep -o '[^"]*$')
+
+  echo "${value}"
+}
 
 # get input
-eval "$(jq -r '@sh "MATCH=\(.match) ERROR=\(.error)"')"
+INPUT=$(cat)
+
+MATCH=$(get_value "match" "${INPUT}")
+ERROR=$(get_value "error" "${INPUT}")
 
 if [[ "$MATCH" == "true" ]]; then
   # empty output
-  jq -n '{}'
+  echo '{}'
   exit 0
 elif [[ "$MATCH" == "false" ]]; then
   >&2 echo "$ERROR"
   exit 1
 else
-  >&2 echo "Match should evaluate to true or false"
+  >&2 echo "Match should evaluate to true or false, got ${MATCH}"
   exit 1
 fi
