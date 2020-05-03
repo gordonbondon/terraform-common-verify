@@ -28,12 +28,13 @@ module "check" {
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
+| external | >= 1.1.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| external | n/a |
+| external | >= 1.1.0 |
 
 ## Inputs
 
