@@ -29,7 +29,7 @@ locals {
 }
 
 module "verify_subnet" {
-  source = "gordonbondon/verify/common"
+  source = "../"
 
   match = length(compact(data.aws_route.private_subnet.*.nat_gateway_id)) == length(var.private_subnet_ids)
   error = "All private subnets must have a route to NAT gateway. [${join(",", local.temp_sub_no_nat)}] don't have it."

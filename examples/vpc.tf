@@ -9,7 +9,7 @@ data "aws_vpc" "vpc" {
 }
 
 module "verify_vpc" {
-  source = "gordonbondon/verify/common"
+  source = "../"
 
   match = data.aws_vpc.vpc.enable_dns_support && data.aws_vpc.vpc.enable_dns_hostnames
   error = "VPC ${var.vpc_id} must have DNS support (got ${data.aws_vpc.vpc.enable_dns_support}) and DNS hostnames (got ${data.aws_vpc.vpc.enable_dns_hostnames}) enabled"

@@ -1,0 +1,86 @@
+name: pr
+on:
+  pull_request:
+    branches: [master]
+jobs:
+  lint:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-python@v1
+      - name: Set PY
+        run: echo "::set-env name=PY::$(python -c 'import hashlib, sys;print(hashlib.sha256(sys.version.encode()+sys.executable.encode()).hexdigest())')"
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ runner.os }}-pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pre-commit-
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('.pre-commit-config.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+      - name: Set GOPATH
+        run: |
+          echo "::set-env name=GOPATH::$(go env GOPATH)"
+          echo "::add-path::$(go env GOPATH)/bin"
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Install tools
+        working-directory: test
+        run: |
+          go install github.com/segmentio/terraform-docs
+          go install github.com/terraform-linters/tflint
+
+      - uses: autero1/action-terraform@v0.1.0
+        with:
+          terraform_version: 0.12.21
+
+      - name: Run terraform init
+        run: |
+          configs=$(find . -not -path '*/.terraform/*' -type f -name "*.tf" | xargs -I {} dirname {} | uniq)
+          for config in $configs; do
+            terraform init -backend=false $config
+          done
+
+      - uses: pre-commit/action@v1.0.1
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - uses: actions/setup-go@v1
+        with:
+          go-version: 1.14
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Run terratest
+        working-directory: test
+        run: |
+          go test .
+
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - run: "true"
+    needs:
+      - lint
+      - test
+
