@@ -8,6 +8,8 @@ If you need to verify just module variables - use terraform built-in [validation
 
 ## Usage example
 
+For more real life examples check [./examples directory](./examples)
+
 ```terraform
 module "check" {
   source  = "gordonbondon/verify/common"
