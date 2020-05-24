@@ -13,7 +13,7 @@ For more real life examples check [./examples directory](./examples)
 ```terraform
 module "check" {
   source  = "gordonbondon/verify/common"
-  version = "~> 2.0"
+  version = "~> 1.0"
 
   match = contains(list("a", "b", "c"), "a")
   error = "Value must be one of a,b,c"
