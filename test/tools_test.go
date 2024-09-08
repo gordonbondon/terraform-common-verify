@@ -1,8 +1,8 @@
-// +build tools
+//go:build tools
 
 package test
 
 import (
-	_ "github.com/segmentio/terraform-docs"
+	_ "github.com/terraform-docs/terraform-docs"
 	_ "github.com/terraform-linters/tflint"
 )
