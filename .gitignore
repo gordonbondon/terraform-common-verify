@@ -1,4 +1,6 @@
 .terraform
+.terraform-version
+.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
 .kitchen

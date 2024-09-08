@@ -1,4 +1,5 @@
 variable "match" {
+  type        = bool
   description = "pass in expression that will evaluate to `true` or `false`"
 }
 

@@ -1,8 +1,16 @@
 repos:
-- repo: git://github.com/antonbabenko/pre-commit-terraform
-  rev: v1.27.0
+- repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.94.1
   hooks:
     - id: terraform_fmt
     - id: terraform_docs
     - id: terraform_validate
+      exclude: "^test/fixtures/misconfigured$"
     - id: terraform_tflint
+      args:
+        - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+      exclude: |
+        (?x)^(
+            ^examples/.*|
+            ^test/fixtures/.*
+        )$

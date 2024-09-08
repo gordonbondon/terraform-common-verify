@@ -17,7 +17,7 @@ func TestTerraformBasicExample(t *testing.T) {
 	}{
 		{name: "valid", expectedError: ""},
 		{name: "invalid", expectedError: "Value must be in a, b, c"},
-		{name: "misconfigured", expectedError: "Match should evaluate to true or false, got wrong"},
+		{name: "misconfigured", expectedError: "a bool is required"},
 	}
 
 	for _, tc := range testCases {
@@ -28,7 +28,6 @@ func TestTerraformBasicExample(t *testing.T) {
 			}
 
 			output, err := terraform.InitAndPlanE(t, terraformOptions)
-
 			if err != nil {
 				if tc.expectedError == "" {
 					t.Errorf("Expected no error but got:\n%v", output)

@@ -22,15 +22,15 @@ data "aws_route" "private_subnet" {
 
 locals {
   # get subnet without NAT gateway
-  temp_rt_no_nat = matchkeys(data.aws_route.private_subnet.*.route_table_id, data.aws_route.private_subnet.*.nat_gateway_id, list(""))
+  temp_rt_no_nat = matchkeys(data.aws_route.private_subnet[*].route_table_id, data.aws_route.private_subnet[*].nat_gateway_id, tolist([""]))
   temp_sub_no_nat = [
-    for rt_id in local.temp_rt_no_nat : element(var.private_subnet_ids, index(data.aws_route_table.private_subnet.*.id, rt_id))
+    for rt_id in local.temp_rt_no_nat : element(var.private_subnet_ids, index(data.aws_route_table.private_subnet[*].id, rt_id))
   ]
 }
 
 module "verify_subnet" {
   source = "../"
 
-  match = length(compact(data.aws_route.private_subnet.*.nat_gateway_id)) == length(var.private_subnet_ids)
+  match = length(compact(data.aws_route.private_subnet[*].nat_gateway_id)) == length(var.private_subnet_ids)
   error = "All private subnets must have a route to NAT gateway. [${join(",", local.temp_sub_no_nat)}] don't have it."
 }
