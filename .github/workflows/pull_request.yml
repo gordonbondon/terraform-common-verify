@@ -11,7 +11,12 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12
-          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('.github/workflows/pull_request.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - uses: actions/setup-go@v5
         with:
