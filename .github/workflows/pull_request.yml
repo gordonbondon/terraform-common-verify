@@ -39,7 +39,7 @@ jobs:
         run: |
           configs=$(find . -not -path '*/.terraform/*' -type f -name "*.tf" | xargs -I {} dirname {} | uniq)
           for config in $configs; do
-            terraform init -backend=false $config
+            terraform init -backend=false -chdir=$config
           done
 
       - uses: pre-commit/action@v3.0.1
