@@ -22,7 +22,7 @@ module "check" {
 
 ## System Requirements
 
-* `bash` shell interpreter
+* `sh` shell interpreter
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
