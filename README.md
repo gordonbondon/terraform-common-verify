@@ -22,7 +22,7 @@ module "check" {
 
 ## System Requirements
 
-* `bash` shell interpreter
+* `sh` shell interpreter
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
@@ -36,7 +36,7 @@ module "check" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_external"></a> [external](#provider\_external) | 2.3.3 |
+| <a name="provider_external"></a> [external](#provider\_external) | 2.3.4 |
 
 ## Modules
 

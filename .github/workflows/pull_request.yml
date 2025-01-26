@@ -30,7 +30,7 @@ jobs:
 
       - uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.9
+          terraform_version: 1.10
 
       - name: Run terraform init
         run: |
@@ -50,6 +50,10 @@ jobs:
         with:
           go-version: 1.23
           cache-dependency-path: "**/go.sum"
+
+      - uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.10
 
       - name: Run terratest
         working-directory: test

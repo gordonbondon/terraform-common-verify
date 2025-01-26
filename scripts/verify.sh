@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
-set -euo pipefail
+set -eu
 
-function get_value {
+get_value() {
   value=$(echo "${2}" | grep -o "\"${1}\":\"[^\"]*" | grep -o '[^"]*$')
 
   echo "${value}"
@@ -14,11 +14,11 @@ INPUT=$(cat)
 MATCH=$(get_value "match" "${INPUT}")
 ERROR=$(get_value "error" "${INPUT}")
 
-if [[ "$MATCH" == "true" ]]; then
+if [ "$MATCH" = "true" ]; then
   # empty output
   echo '{}'
   exit 0
-elif [[ "$MATCH" == "false" ]]; then
+elif [ "$MATCH" = "false" ]; then
   >&2 echo "$ERROR"
   exit 1
 else
