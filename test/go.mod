@@ -98,7 +98,7 @@ require (
 	github.com/terraform-linters/tflint-plugin-sdk v0.21.0 // indirect
 	github.com/terraform-linters/tflint-ruleset-terraform v0.9.1 // indirect
 	github.com/tmccombs/hcl2json v0.3.3 // indirect
-	github.com/ulikunitz/xz v0.5.10 // indirect
+	github.com/ulikunitz/xz v0.5.14 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/zclconf/go-cty v1.15.0 // indirect
